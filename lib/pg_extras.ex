@@ -23,7 +23,7 @@ defmodule PgExtras do
     end
   end
 
-  def generate_question_marks(list) do
+  defp generate_question_marks(list) do
     list
     |> Enum.map(fn(_) -> "?" end)
     |> Enum.join(", ")
