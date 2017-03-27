@@ -1,5 +1,7 @@
 # pg_extras
 
+> A collection of custom functions for PostgreSQL features in Ecto
+
 ```elixir
 def deps do
   [{:pg_extras, "~> 0.1.0"}]
