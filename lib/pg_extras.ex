@@ -33,6 +33,16 @@ defmodule PgExtras do
     {:fragment, [], [fragment_str | operands]}
   end
 
+  defmacro least(left, right) do
+    quote do
+      fragment("least(?, ?)", unquote(left), unquote(right))
+    end
+  end
+  defmacro least(operands) do
+    fragment_str = "least(" <> generate_question_marks(operands) <> ")"
+    {:fragment, [], [fragment_str | operands]}
+  end
+
   defp generate_question_marks(list) do
     list
     |> Enum.map(fn(_) -> "?" end)

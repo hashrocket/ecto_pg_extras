@@ -65,4 +65,31 @@ defmodule PgExtrasTest do
 
     assert results == [3, 3, 3, nil, 2]
   end
+
+  test "least of two values" do
+    results =
+      from(buckets in "buckets",
+      select: {
+        least(buckets.a, buckets.b),
+        least(buckets.b, buckets.c)
+      })
+      |> TestRepo.all
+
+    assert results == [
+      {1, 2},
+      {2, 2},
+      {nil, 3},
+      {nil, nil},
+      {2, 2}
+    ]
+  end
+
+  test "least of a list of values" do
+    results =
+      from(buckets in "buckets",
+      select: least([buckets.a, buckets.b, buckets.c]))
+      |> TestRepo.all
+
+    assert results == [1, 2, 3, nil, 2]
+  end
 end
