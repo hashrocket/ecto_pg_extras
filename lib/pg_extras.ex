@@ -23,6 +23,16 @@ defmodule PgExtras do
     end
   end
 
+  defmacro greatest(left, right) do
+    quote do
+      fragment("greatest(?, ?)", unquote(left), unquote(right))
+    end
+  end
+  defmacro greatest(operands) do
+    fragment_str = "greatest(" <> generate_question_marks(operands) <> ")"
+    {:fragment, [], [fragment_str | operands]}
+  end
+
   defp generate_question_marks(list) do
     list
     |> Enum.map(fn(_) -> "?" end)
