@@ -17,6 +17,12 @@ defmodule PgExtras do
     {:fragment, [], [fragment_str | operands]}
   end
 
+  defmacro nullif(left, right) do
+    quote do
+      fragment("nullif(?, ?)", unquote(left), unquote(right))
+    end
+  end
+
   def generate_question_marks(list) do
     list
     |> Enum.map(fn(_) -> "?" end)

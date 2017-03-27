@@ -24,4 +24,18 @@ defmodule PgExtrasTest do
 
     assert results == [1, 2, 3, nil, 2]
   end
+
+  test "nullif two values" do
+    results =
+      from(buckets in "buckets",
+      where: buckets.id == 1,
+      select: {
+        nullif(buckets.a, 2),
+        nullif(buckets.b, 2),
+        nullif(buckets.c, 2)
+      })
+      |> TestRepo.all
+
+    assert results == [{1, nil, 3}]
+  end
 end
