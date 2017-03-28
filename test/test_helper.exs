@@ -1,6 +1,6 @@
 ExUnit.start()
 
-Code.require_file "support/test_repo/migrations/test_migration.exs", __DIR__
+Code.require_file "test_migration.exs", __DIR__
 
 alias Ecto.Integration.TestRepo
 
