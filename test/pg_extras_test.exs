@@ -111,4 +111,23 @@ defmodule PgExtrasTest do
       {nil, "lutz"}
     ]
   end
+
+  test "upper a string" do
+    results =
+      from(persons in "persons",
+      select: {
+        upper(persons.first_name),
+        upper(persons.last_name)
+      })
+      |> TestRepo.all
+
+    assert results == [
+      {"LIZ", "LEMON"},
+      {"TRACY", "JORDAN"},
+      {nil, nil},
+      {"JACK", "DONAGHY"},
+      {"TOOFER", nil},
+      {nil, "LUTZ"}
+    ]
+  end
 end

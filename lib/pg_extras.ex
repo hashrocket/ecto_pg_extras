@@ -49,6 +49,12 @@ defmodule PgExtras do
     end
   end
 
+  defmacro upper(operand) do
+    quote do
+      fragment("upper(?)", unquote(operand))
+    end
+  end
+
   defp generate_question_marks(list) do
     list
     |> Enum.map(fn(_) -> "?" end)
