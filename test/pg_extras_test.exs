@@ -92,4 +92,23 @@ defmodule PgExtrasTest do
 
     assert results == [1, 2, 3, nil, 2]
   end
+
+  test "lower a string" do
+    results =
+      from(persons in "persons",
+      select: {
+        lower(persons.first_name),
+        lower(persons.last_name)
+      })
+      |> TestRepo.all
+
+    assert results == [
+      {"liz", "lemon"},
+      {"tracy", "jordan"},
+      {nil, nil},
+      {"jack", "donaghy"},
+      {"toofer", nil},
+      {nil, "lutz"}
+    ]
+  end
 end
