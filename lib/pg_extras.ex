@@ -1,7 +1,7 @@
-defmodule PgExtras do
+defmodule EctoPgExtras do
   import Ecto.Query
   @moduledoc """
-  Documentation for PgExtras.
+  Documentation for EctoPgExtras.
   """
 
   @doc """

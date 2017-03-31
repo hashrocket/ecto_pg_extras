@@ -1,9 +1,9 @@
-defmodule PgExtrasTest do
-  use PgExtras.TestCase
-  doctest PgExtras
+defmodule EctoPgExtrasTest do
+  use EctoPgExtras.TestCase
+  doctest EctoPgExtras
 
   import Ecto.Query
-  import PgExtras
+  import EctoPgExtras
 
   alias Ecto.Integration.TestRepo
 

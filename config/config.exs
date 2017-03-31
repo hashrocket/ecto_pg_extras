@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :pg_extras, key: :value
+#     config :ecto_pg_extras, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:pg_extras, :key)
+#     Application.get_env(:ecto_pg_extras, :key)
 #
 # Or configure a 3rd-party app:
 #

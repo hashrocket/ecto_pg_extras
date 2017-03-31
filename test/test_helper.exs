@@ -6,14 +6,14 @@ alias Ecto.Integration.TestRepo
 
 Application.put_env(:ecto, TestRepo,
   adapter: Ecto.Adapters.Postgres,
-  url: "ecto://postgres:postgres@localhost/pg_extras_test",
+  url: "ecto://postgres:postgres@localhost/ecto_pg_extras_test",
   pool: Ecto.Adapters.SQL.Sandbox)
 
 defmodule Ecto.Integration.TestRepo do
   use Ecto.Repo, otp_app: :ecto
 end
 
-defmodule PgExtras.TestCase do
+defmodule EctoPgExtras.TestCase do
   use ExUnit.CaseTemplate
 
   setup do

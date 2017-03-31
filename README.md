@@ -1,20 +1,20 @@
-# pg_extras
+# ecto_pg_extras
 
 > A collection of custom functions for PostgreSQL features in Ecto
 
 ```elixir
 def deps do
-  [{:pg_extras, "~> 0.1.0"}]
+  [{:ecto_pg_extras, "~> 0.1.0"}]
 end
 ```
 
 ## Usage
 
-Import `pg_extras` in any module where you want access to the custom
+Import `ecto_pg_extras` in any module where you want access to the custom
 functions for use with Ecto queries.
 
 ```elixir
-import PgExtras
+import EctoPgExtras
 ```
 
 Then use any of the functions as part of a query as you would anything else
