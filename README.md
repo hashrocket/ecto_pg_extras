@@ -8,6 +8,31 @@ def deps do
 end
 ```
 
+PostgreSQL has quite a variety of useful querying constructs that are not
+readily available within Ecto's DSL. For example, doing a range check in a
+Postgres query can be rather elegantly accomplished with the `between`
+construct:
+
+```sql
+select title, description from posts
+where published_at between
+  now() - '90 days'::interval and
+  now() - '30 days'::interval
+;
+```
+
+Achieving the same result using the Ecto querying DSL would require a query
+looking something like the following:
+
+```elixir
+from(posts in "posts",
+select: {posts.title, posts.description},
+where: fragment("now() - '90 days'::interval < ?", posts.published_at)
+where: fragment("now() - '30 days'::interval > ?", posts.published_at))
+```
+
+What if we could ...
+
 ## Usage
 
 Import `ecto_pg_extras` in any module where you want access to the custom
