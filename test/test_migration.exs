@@ -11,8 +11,6 @@ defmodule TestMigration do
       );
     """
 
-    flush()
-
     execute """
       insert into buckets (a,b,c)
       values
@@ -23,8 +21,6 @@ defmodule TestMigration do
         (null, 2, null);
     """
 
-    flush()
-
     execute """
       create table persons(
         id serial primary key,
@@ -33,8 +29,6 @@ defmodule TestMigration do
         email varchar not null
       );
     """
-
-    flush()
 
     execute """
       insert into persons (first_name, last_name, email)
