@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.1
+
+Fill out the docs with better descriptions and source examples.
+
 ## v0.1.0
 
 Initial release.
