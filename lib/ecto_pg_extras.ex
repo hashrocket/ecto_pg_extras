@@ -4,8 +4,18 @@ defmodule EctoPgExtras do
   """
 
   @doc """
-  Use SQL's coalesce function to return the first argument that is not null.
-  This works with two arguments.
+  PostgreSQL's `coalesce` function
+
+  Use `coalesce/2` to return the first argument that is not null.
+
+  ```
+  from(posts in "posts",
+  select: {
+    posts.title,
+    coalesce(posts.short_description, posts.description)
+  })
+  ```
+
   """
   defmacro coalesce(left, right) do
     quote do
@@ -14,8 +24,19 @@ defmodule EctoPgExtras do
   end
 
   @doc """
-  Use SQL's coalesce function to return the first argument that is not null.
-  This works with a list of arguments.
+  PostgreSQL's `coalesce` function
+
+  Use `coalesce/1` to return the first value in the given list that is not
+  null.
+
+  ```
+  from(posts in "posts",
+  select: {
+    posts.title,
+    coalesce([posts.short_description, posts.description, "N/A"])
+  })
+  ```
+
   """
   defmacro coalesce(operands) do
     fragment_str = "coalesce(" <> generate_question_marks(operands) <> ")"
