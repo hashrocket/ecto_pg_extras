@@ -1,15 +1,18 @@
 defmodule EctoPgExtras.Mixfile do
   use Mix.Project
 
+  @version "0.1.0"
+
   def project do
     [
       app: :ecto_pg_extras,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.4",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       description: description(),
       package: package(),
+      docs: [source_ref: "v#{@version}", main: "EctoPgExtras"],
       deps: deps()
     ]
   end
@@ -38,8 +41,7 @@ defmodule EctoPgExtras.Mixfile do
       maintainers: ["Josh Branchaud", "Hashrocket"],
       licenses: ["MIT"],
       links: %{
-        "GitHub" => "https://github.com/hashrocket/ecto_pg_extras",
-        "Docs" => "https://hexdocs.pm/ecto_pg_extras/EctoPgExtras.html"
+        "GitHub" => "https://github.com/hashrocket/ecto_pg_extras"
       }
     ]
   end
