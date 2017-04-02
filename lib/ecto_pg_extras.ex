@@ -55,6 +55,24 @@ defmodule EctoPgExtras do
     end
   end
 
+  defmacro between(value, lower, upper) do
+    quote do
+      fragment("? between ? and ?",
+               unquote(value),
+               unquote(lower),
+               unquote(upper))
+    end
+  end
+
+  defmacro not_between(value, lower, upper) do
+    quote do
+      fragment("? not between ? and ?",
+               unquote(value),
+               unquote(lower),
+               unquote(upper))
+    end
+  end
+
   defp generate_question_marks(list) do
     list
     |> Enum.map(fn(_) -> "?" end)

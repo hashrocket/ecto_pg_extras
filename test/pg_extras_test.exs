@@ -130,4 +130,36 @@ defmodule EctoPgExtrasTest do
       {nil, "LUTZ"}
     ]
   end
+
+  test "between two timestamps" do
+    lower_timestamp = Ecto.DateTime.cast!({{2016,5,10},{0,0,0}})
+    upper_timestamp = Ecto.DateTime.cast!({{2016,5,20},{0,0,0}})
+
+    results =
+      from(posts in "posts",
+      where: between(posts.published_at,
+                     ^lower_timestamp,
+                     ^upper_timestamp),
+      select: posts.id
+      )
+      |> TestRepo.all()
+
+    assert results == [1]
+  end
+
+  test "not between two timestamps" do
+    lower_timestamp = Ecto.DateTime.cast!({{2016,5,10},{0,0,0}})
+    upper_timestamp = Ecto.DateTime.cast!({{2016,5,20},{0,0,0}})
+
+    results =
+      from(posts in "posts",
+      where: not_between(posts.published_at,
+                         ^lower_timestamp,
+                         ^upper_timestamp),
+      select: posts.id
+      )
+      |> TestRepo.all()
+
+    assert results == [2]
+  end
 end
