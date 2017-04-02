@@ -38,7 +38,8 @@ defmodule EctoPgExtras.Mixfile do
       maintainers: ["Josh Branchaud", "Hashrocket"],
       licenses: ["MIT"],
       links: %{
-        "GitHub" => "https://github.com/hashrocket/ecto_pg_extras"
+        "GitHub" => "https://github.com/hashrocket/ecto_pg_extras",
+        "Docs" => "https://hexdocs.pm/ecto_pg_extras/EctoPgExtras.html"
       }
     ]
   end
