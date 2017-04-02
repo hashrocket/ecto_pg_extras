@@ -1,5 +1,4 @@
 defmodule EctoPgExtras do
-  import Ecto.Query
   @moduledoc """
   Documentation for EctoPgExtras.
   """
