@@ -44,7 +44,27 @@ defmodule EctoPgExtras do
   end
 
   @doc """
-  Use SQL's nullif function to return null if the two arguments are equal.
+  PostgreSQL's `nullif` function
+
+  Use `nullif/2` to return null if the two arguments are equal.
+
+  ```
+  from(posts in "posts",
+  select: nullif(posts.description, ""))
+  ```
+
+  This is a peculiar function, but can be handy in combination with other
+  functions. For example, use it within `coalesce/1` to weed out a blank
+  value and replace it with some default.
+
+  ```
+  from(posts in "posts",
+  select: {
+    posts.title,
+    coalesce(nullif(posts.description, ""), "N/A")
+  })
+  ```
+
   """
   defmacro nullif(left, right) do
     quote do
@@ -53,8 +73,15 @@ defmodule EctoPgExtras do
   end
 
   @doc """
-  Use SQL's greatest function to return the larger of the two arguments.
-  This works with two arguments.
+  PostgreSQL's `greatest` function
+
+  Use `greatest/2` to return the larger of two arguments. This function will
+  always preference actual values over null.
+
+  ```
+  from(posts in "posts",
+  select: greatest(posts.created_at, posts.published_at))
+  ```
   """
   defmacro greatest(left, right) do
     quote do
@@ -63,8 +90,20 @@ defmodule EctoPgExtras do
   end
 
   @doc """
-  Use SQL's greatest function to return the larger of the arguments.
-  This works with a list of arguments.
+  PostgreSQL's `greatest` function
+
+  Use `greatest/1` to return the largest of a list of arguments. This
+  function will always preference actual values over null.
+
+  ```
+  from(posts in "posts",
+  select: greatest([
+                     posts.created_at,
+                     posts.updated_at,
+                     posts.published_at
+                   ]))
+  ```
+
   """
   defmacro greatest(operands) do
     fragment_str = "greatest(" <> generate_question_marks(operands) <> ")"
@@ -72,8 +111,16 @@ defmodule EctoPgExtras do
   end
 
   @doc """
-  Use SQL's least function to return the smaller of the two arguments.
-  This works with two arguments.
+  PostgreSQL's `least` function
+
+  Use `least/2` to return the smaller of the two arguments. This function
+  always preferences actual values over null.
+
+  ```
+  from(posts in "posts",
+  select: least(posts.created_at, posts.updated_at))
+  ```
+
   """
   defmacro least(left, right) do
     quote do
@@ -82,8 +129,20 @@ defmodule EctoPgExtras do
   end
 
   @doc """
-  Use SQL's least function to return the smaller of the arguments.
-  This works with a list of arguments.
+  PostgreSQL's `least` function
+
+  Use `least/1` to return the smallest of the arguments. This function
+  always preferences actual values over null.
+
+  ```
+  from(posts in "posts",
+  select: least([
+                  posts.created_at,
+                  posts.updated_at,
+                  posts.published_at
+                ]))
+  ```
+
   """
   defmacro least(operands) do
     fragment_str = "least(" <> generate_question_marks(operands) <> ")"
@@ -91,9 +150,16 @@ defmodule EctoPgExtras do
   end
 
   @doc """
-  User SQL's lower function to lowercase a given string. This works like
-  Elixir's `String.downcase/1` function allowing string manipulation within
-  a query.
+  PostgreSQL's `lower` function
+
+  Use `lower/1` to lowercase a given string. This works like Elixir's
+  `String.downcase/1` function allowing string manipulation within a query.
+
+  ```
+  from(users in "users",
+  select: lower(users.email))
+  ```
+
   """
   defmacro lower(operand) do
     quote do
@@ -102,9 +168,16 @@ defmodule EctoPgExtras do
   end
 
   @doc """
-  User SQL's upper function to uppercase a given string. This works like
-  Elixir's `String.upcase/1` function allowing string manipulation within
-  a query.
+  PostgreSQL's `upper` function
+
+  Use `upper/1` to uppercase a given string. This works like Elixir's
+  `String.upcase/1` function allowing string manipulation within a query.
+
+  ```
+  from(users in "users",
+  select: upper(users.username))
+  ```
+
   """
   defmacro upper(operand) do
     quote do
@@ -113,9 +186,20 @@ defmodule EctoPgExtras do
   end
 
   @doc """
-  Use SQL's between predicate to perform a range test for the first argument
-  against the second (lower bound) and third argument (upper bound). Returns
-  true if the value falls in the given range. False otherwise.
+  PostgreSQL's `between` predicate
+
+  Use `between/3` to perform a range test for the first argument against the
+  second (lower bound) and third argument (upper bound). Returns true if the
+  value falls in the given range. False otherwise.
+
+  ```
+  from(posts in "posts",
+  select: {posts.title, posts.description}
+  where: between(posts.published_at,
+                 ^Ecto.DateTime.cast!({{2016,5,10},{0,0,0}}),
+                 ^Ecto.DateTime.cast!({{2016,5,20},{0,0,0}})))
+  ```
+
   """
   defmacro between(value, lower, upper) do
     quote do
@@ -127,10 +211,20 @@ defmodule EctoPgExtras do
   end
 
   @doc """
-  Use SQL's not between predicate to perform a range test for the first
-  argument against the second (lower bound) and third argument (upper
-  bound). Returns true if the value does not fall in the given range. False
-  otherwise.
+  PostgreSQL's `not between` predicate
+
+  Use `not_between/3` to perform a range test for the first argument against
+  the second (lower bound) and third argument (upper bound). Returns true if
+  the value does not fall in the given range. False otherwise.
+
+  ```
+  from(posts in "posts",
+  select: {posts.title, posts.description}
+  where: not_between(posts.published_at,
+                     ^Ecto.DateTime.cast!({{2016,5,10},{0,0,0}}),
+                     ^Ecto.DateTime.cast!({{2016,5,20},{0,0,0}})))
+  ```
+
   """
   defmacro not_between(value, lower, upper) do
     quote do
