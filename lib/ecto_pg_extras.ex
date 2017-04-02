@@ -1,6 +1,6 @@
 defmodule EctoPgExtras do
   @moduledoc """
-  Documentation for EctoPgExtras.
+  A collection of custom functions for PostgreSQL features in Ecto
   """
 
   @doc """
